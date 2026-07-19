@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard Familiar — Tiago & Luiza</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root { --bg:#f7f6f2; --card:#ffffff; --ink:#1f2933; --muted:#687385; --green:#2f855a; --red:#c53030; --blue:#2b6cb0; --amber:#b7791f; --line:#e5e7eb; }
+    * { box-sizing:border-box } body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--ink); }
+    header { padding:28px 20px; background:linear-gradient(135deg,#1f2933,#2b6cb0); color:#fff; }
+    .wrap { max-width:1180px; margin:0 auto; } h1 { margin:0 0 8px; font-size:28px } h2 { margin:0 0 14px; font-size:20px } h3 { margin:0 0 8px; font-size:16px }
+    .sub { opacity:.9; font-size:14px } .grid { display:grid; gap:16px; grid-template-columns:repeat(12,1fr); padding:20px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:18px; box-shadow:0 8px 24px rgba(31,41,51,.06); }
+    .span3 { grid-column:span 3 } .span4 { grid-column:span 4 } .span6 { grid-column:span 6 } .span8 { grid-column:span 8 } .span12 { grid-column:span 12 }
+    .metric { color:var(--muted); font-size:13px } .value { font-size:25px; font-weight:800; margin-top:6px } .ok { color:var(--green) } .bad { color:var(--red) } .warn { color:var(--amber) }
+    table { width:100%; border-collapse:collapse; font-size:13px } th,td { padding:10px 8px; border-bottom:1px solid var(--line); text-align:right } th:first-child,td:first-child { text-align:left } th { color:var(--muted); font-weight:700 }
+    .pill { display:inline-block; padding:4px 9px; border-radius:999px; background:#edf2f7; color:#2d3748; font-size:12px; font-weight:700 }
+    .todo li { margin:8px 0 } .note { color:var(--muted); font-size:13px; line-height:1.45 }
+    .bar { height:12px; background:#e5e7eb; border-radius:999px; overflow:hidden } .bar > div { height:100%; background:linear-gradient(90deg,#2f855a,#68d391); width:0 }
+    @media(max-width:850px) { .span3,.span4,.span6,.span8,.span12 { grid-column:span 12 } .grid { padding:12px } header { padding:22px 14px } }
+    @media print { header,.noprint { display:none } body { background:white } .card { box-shadow:none; break-inside:avoid } }
+  </style>
+</head>
+<body>
+<header><div class="wrap"><h1>Dashboard Familiar — Tiago & Luiza</h1><div class="sub">Base consolidada jan–jun/2026 · Conta + cartão sem duplicar pagamentos de fatura · Gerado em 19/07/2026</div></div></header>
+<main class="wrap grid">
+  <section class="card span3"><div class="metric">Entradas médias/mês</div><div class="value ok">R$ 31.794,60</div><div class="note">Tiago + Luiza</div></section>
+  <section class="card span3"><div class="metric">Gastos médios/mês</div><div class="value bad">R$ 30.332,33</div><div class="note">Conta sem fatura + compras no cartão</div></section>
+  <section class="card span3"><div class="metric">Resultado médio/mês</div><div class="value ok">R$ 1.462,27</div><div class="note">Entradas - gastos consolidados</div></section>
+  <section class="card span3"><div class="metric">Meta viagem outubro</div><div class="value warn">R$ 7.000,00</div><div class="note">Reservar R$ 1.750/mês até outubro ou R$ 2.333/mês até setembro</div></section>
+
+  <section class="card span8"><h2>Fluxo familiar mensal</h2><canvas id="flow"></canvas></section>
+  <section class="card span4"><h2>Resumo prático</h2><ul class="todo"><li><b>Dívidas:</b> Tiago tem ofertas à vista de R$ 66,58. Dívida da Luiza ainda não foi lida/confirmada.</li><li><b>Viagem:</b> guardar antes de gastar; criar “envelope resort”.</li><li><b>Atenção:</b> junho teve pico por compra Samsung e saúde/farmácia.</li><li><b>Regra:</b> pagamento de fatura não entra como gasto novo quando a fatura já está detalhada.</li></ul></section>
+
+  <section class="card span12"><h2>Gastos divididos por pessoa</h2><table><thead><tr><th>Mês</th><th>Tiago conta s/ cartão</th><th>Tiago cartão</th><th>Total Tiago</th><th>Luiza conta s/ Nubank</th><th>Luiza Nubank</th><th>Total Luiza</th><th>Total família</th></tr></thead><tbody><tr><td>Jan/26</td><td>R$ 8.891,29</td><td>R$ 3.059,29</td><td><b>R$ 11.950,58</b></td><td>R$ 6.025,56</td><td>R$ 5.450,47</td><td><b>R$ 11.476,03</b></td><td><b>R$ 23.426,61</b></td></tr><tr><td>Fev/26</td><td>R$ 9.405,33</td><td>R$ 3.562,97</td><td><b>R$ 12.968,30</b></td><td>R$ 5.335,46</td><td>R$ 5.982,47</td><td><b>R$ 11.317,93</b></td><td><b>R$ 24.286,23</b></td></tr><tr><td>Mar/26</td><td>R$ 12.518,95</td><td>R$ 3.374,42</td><td><b>R$ 15.893,37</b></td><td>R$ 8.237,49</td><td>R$ 5.494,28</td><td><b>R$ 13.731,77</b></td><td><b>R$ 29.625,14</b></td></tr><tr><td>Abr/26</td><td>R$ 14.709,09</td><td>R$ 2.780,13</td><td><b>R$ 17.489,22</b></td><td>R$ 6.753,76</td><td>R$ 5.466,10</td><td><b>R$ 12.219,86</b></td><td><b>R$ 29.709,08</b></td></tr><tr><td>Mai/26</td><td>R$ 13.554,76</td><td>R$ 2.534,83</td><td><b>R$ 16.089,59</b></td><td>R$ 5.931,93</td><td>R$ 7.080,18</td><td><b>R$ 13.012,11</b></td><td><b>R$ 29.101,70</b></td></tr><tr><td>Jun/26</td><td>R$ 22.628,47</td><td>R$ 2.801,81</td><td><b>R$ 25.430,28</b></td><td>R$ 14.301,29</td><td>R$ 6.113,67</td><td><b>R$ 20.414,96</b></td><td><b>R$ 45.845,24</b></td></tr></tbody></table><p class="note">Obs.: os cartões são considerados pelas compras/consumos da fatura; pagamentos de fatura foram removidos das saídas da conta para evitar duplicidade.</p></section>
+
+  <section class="card span6"><h2>Dívidas e prioridade</h2><table><thead><tr><th>Pessoa</th><th>Credor</th><th>Valor original</th><th>Oferta/valor</th><th>Status</th></tr></thead><tbody><tr><td>Tiago</td><td>Nubank Empréstimo</td><td>R$ 16.465,69</td><td>R$ 2.557,66</td><td><span class="pill">confirmar</span></td></tr><tr><td>Tiago</td><td>Nubank Cartão — SCPC</td><td>R$ 24.183,26</td><td>R$ 4.990,37</td><td><span class="pill">prioridade alta</span></td></tr><tr><td>Tiago</td><td>Itapeva / Itaú</td><td>R$ 11.299,04</td><td>R$ 1.542,34</td><td><span class="pill">confirmar</span></td></tr><tr><td>Tiago</td><td>Itapeva / Itaú</td><td>R$ 9.180,26</td><td>R$ 1.253,13</td><td><span class="pill">confirmar</span></td></tr><tr><td>Tiago</td><td>Itapeva / Itaú</td><td>R$ 95,10</td><td>R$ 15,22</td><td><span class="pill">confirmar e pagar</span></td></tr><tr><td>Tiago</td><td>Itapeva / Itaú</td><td>R$ 320,97</td><td>R$ 51,36</td><td><span class="pill">confirmar e pagar</span></td></tr><tr><td>Luiza</td><td>Bradesco — cartão de crédito atrasado</td><td>R$ 28.300,09</td><td>R$ 28.300,09</td><td><span class="pill">prioridade alta</span></td></tr></tbody></table><p class="note">Total conhecido: <b>Tiago R$ 10.410,08</b> + <b>Luiza R$ 28.300,09</b> = <b>R$ 38.710,17</b>. Pagar/negociar só por canal oficial: Serasa/Limpa Nome, app/site oficial do credor ou banco.</p></section>
+  <section class="card span6"><h2>Estratégia recomendada</h2><ol class="todo"><li><b>Hoje:</b> validar todas as dívidas do Tiago em canais oficiais. Prioridade: Nubank Cartão negativado no SCPC.</li><li><b>Rápido:</b> se confirmadas oficialmente, quitar as duas menores da Itapeva: R$ 66,58.</li><li><b>Esta semana:</b> negociar o cartão Bradesco atrasado da Luiza de R$ 28.300,09 e buscar desconto/parcelamento seguro.</li><li><b>Plano atual conhecido:</b> dívidas somam R$ 38.710,17 e a viagem soma R$ 7.000,00; meta total conhecida: R$ 45.710,17.</li><li><b>Jul–Out:</b> reservar R$ 1.750/mês para o resort. Dívidas maiores devem caber sem empurrar cartão para rotativo.</li><li><b>Corte temporário:</b> reduzir compras online, restaurantes/iFood e gastos avulsos até quitar acordos e formar a reserva do resort.</li></ol></section>
+
+  <section class="card span6"><h2>Plano Resort Outubro</h2><div class="bar"><div style="width:0%"></div></div><p class="note"><b>Meta:</b> R$ 7.000,00 · <b>Reservado registrado:</b> R$ 0,00 · <b>Falta:</b> R$ 7.000,00.</p><table><thead><tr><th>Cenário</th><th>Prazo</th><th>Valor mensal</th></tr></thead><tbody><tr><td>Confortável</td><td>Jul–Out</td><td>R$ 1.750,00</td></tr><tr><td>Seguro antes da viagem</td><td>Jul–Set</td><td>R$ 2.333,34</td></tr><tr><td>Com folga + extras</td><td>Jul–Set</td><td>R$ 2.700,00</td></tr></tbody></table></section>
+  <section class="card span6"><h2>Onde buscar economia</h2><ul class="todo"><li><b>Compras online:</b> junho do Tiago teve pico por Samsung; segurar compras grandes até fechar viagem.</li><li><b>Restaurantes/iFood:</b> teto semanal familiar ajuda mais que corte radical.</li><li><b>Cartões:</b> acompanhar consumo durante o mês, não só no fechamento.</li><li><b>Transferências familiares:</b> separar o que é gasto real, reembolso ou repasse para não confundir orçamento.</li></ul></section>
+
+  <section class="card span12"><h2>Base mensal consolidada</h2><table><thead><tr><th>Mês</th><th>Entradas família</th><th>Gastos família</th><th>Resultado</th></tr></thead><tbody><tr><td>Jan/26</td><td>R$ 19.967,55</td><td>R$ 23.426,61</td><td class="bad"><b>R$ -3.459,06</b></td></tr><tr><td>Fev/26</td><td>R$ 27.861,45</td><td>R$ 24.286,23</td><td class="ok"><b>R$ 3.575,22</b></td></tr><tr><td>Mar/26</td><td>R$ 28.438,12</td><td>R$ 29.625,14</td><td class="bad"><b>R$ -1.187,02</b></td></tr><tr><td>Abr/26</td><td>R$ 29.699,17</td><td>R$ 29.709,08</td><td class="bad"><b>R$ -9,91</b></td></tr><tr><td>Mai/26</td><td>R$ 30.743,13</td><td>R$ 29.101,70</td><td class="ok"><b>R$ 1.641,43</b></td></tr><tr><td>Jun/26</td><td>R$ 54.058,18</td><td>R$ 45.845,24</td><td class="ok"><b>R$ 8.212,94</b></td></tr></tbody></table></section>
+</main>
+<script>
+const months=['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'];
+const income=[19967.55, 27861.45, 28438.12, 29699.17, 30743.13, 54058.18];
+const spend=[23426.61, 24286.23, 29625.14, 29709.08, 29101.7, 45845.24];
+const balance=[-3459.06, 3575.22, -1187.02, -9.91, 1641.43, 8212.94];
+new Chart(document.getElementById('flow'), {type:'bar', data:{labels:months, datasets:[{label:'Entradas família', data:income, backgroundColor:'#2f855a'},{label:'Gastos família', data:spend, backgroundColor:'#c53030'},{label:'Resultado', data:balance, type:'line', borderColor:'#2b6cb0', backgroundColor:'#2b6cb0', tension:.25}]}, options:{responsive:true, plugins:{legend:{position:'bottom'}}, scales:{y:{ticks:{callback:v=>'R$ '+Number(v).toLocaleString('pt-BR')}}}});
+</script>
+</body></html>
